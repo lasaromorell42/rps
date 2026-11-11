@@ -25,6 +25,8 @@ function playRound(humanChoice, computerChoice){
     let gameOutcome =  `${d[humanChoice]} against ${d[computerChoice]}`
     if (humanChoice === computerChoice){
         console.log(`Tied ` + gameOutcome);
+        computerScore += 1;
+        humanScore += 1;
     }
     else if (humanChoice===0 && computerChoice===1 ||
         humanChoice===1 && computerChoice===2||
@@ -37,14 +39,34 @@ function playRound(humanChoice, computerChoice){
         console.log('Won ' + gameOutcome);
         humanScore += 1;
     }
+    if (humanScore == 5 && computerScore == 5){
+        alert("Tie");
+        humanScore = 0;
+        computerScore = 0;
+    }
+    else if (humanScore == 5){
+        alert("You won!");
+        humanScore = 0;
+        computerScore = 0;
+    }
+    else if (computerScore == 5){
+        alert("Computer won!");
+        humanScore = 0;
+        computerScore = 0;
+    }
+    roundResults.textContent = `You: ${humanScore} Machine: ${computerScore}`;
 }
 
-function playGame(){
-    for (let i = 0; i < 5; i++){
-        humanSelection = getHumanChoice();
-        computerScore = getComputerChoice();
-        playRound(humanSelection, computerScore);
-    }
-    console.log(`Result. Player: ${humanScore}\tComputer: ${computerScore}`);
-}
-playGame();
+selectRock = document.getElementById("rock");
+selectPaper = document.getElementById("paper");
+selectScissors = document.getElementById("scissors");
+
+roundResults = document.createElement("div");
+container = document.getElementById("container");
+container.appendChild(roundResults);
+
+selectRock.addEventListener('click', (ev) => {ev.preventDefault(); playRound(0, getComputerChoice())});
+selectPaper.addEventListener('click', (ev) => {ev.preventDefault(); playRound(1, getComputerChoice())});
+selectScissors.addEventListener('click', (ev) => {ev.preventDefault(); playRound(2, getComputerChoice())});
+
+
